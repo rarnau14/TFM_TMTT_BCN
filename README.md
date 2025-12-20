@@ -15,7 +15,7 @@ L’anàlisi exploratòria, la neteja de dades, l’enginyeria de característiq
 
 Els notebooks estan numerats per indicar l’ordre recomanat d’execució i garantir la traçabilitat del procés analític.
 
-Els models s’entrenen utilitzant diverses tècniques de classificació (Random Forest, Regressió Logística, SVM, LightGBM i xarxes neuronals) i es guarden en format `pickle` per a la seva posterior integració a l’aplicació Shiny.
+Els models s’entrenen utilitzant diverses tècniques de classificació (Regressió Logística, SVM, LightGBM i xarxes neuronals) i es guarden en format `pickle` per a la seva posterior integració a l’aplicació Shiny.
 
 
 ## Aplicació Shiny (R)
