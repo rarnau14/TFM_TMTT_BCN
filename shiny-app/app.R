@@ -45,9 +45,33 @@
   joblib <- import("joblib", delay_load = TRUE)
   
   # ---------------------------------------------------------------
-  # Carrega del model
+  # Models (fitxers separats)
   # ---------------------------------------------------------------
-  models <- joblib$load("models.pkl")
+  model_files <- list(
+    RandomForest       = "model_rf.pkl",
+    LogisticRegression = "model_lr.pkl",
+    LightGBM           = "model_lgbm.pkl",
+    NeuralNetwork      = "model_nw.pkl"
+  )
+  
+  # Opcional però recomanat: comprovar que existeixen
+  missing <- setdiff(unname(unlist(model_files)), list.files())
+  if (length(missing) > 0) {
+    stop("Falten fitxers de models: ", paste(missing, collapse = ", "))
+  }
+  
+  # Cache en memòria (per no carregar del disc cada cop)
+  .models_cache <- new.env(parent = emptyenv())
+  
+  get_model <- function(model_key) {
+    if (exists(model_key, envir = .models_cache, inherits = FALSE)) {
+      return(get(model_key, envir = .models_cache, inherits = FALSE))
+    }
+    path <- model_files[[model_key]]
+    m <- joblib$load(path)
+    assign(model_key, m, envir = .models_cache)
+    m
+  }
   
   # ---------------------------------------------------------------
   # Carrega de dades
@@ -100,15 +124,10 @@
         )
       )
     } else {
-      # Distribució vertical per al predictor (mateix aspecte "de formulari")
+      # Distribució vertical (País -> CA -> Prov. -> Mun.)
       tagList(
         selectizeInput(
-          ns("mun"), labels$mun,
-          choices = NULL,
-          multiple = multiple
-        ),
-        selectizeInput(
-          ns("prov"), labels$prov,
+          ns("pais"), labels$pais,
           choices = NULL,
           multiple = multiple
         ),
@@ -118,7 +137,12 @@
           multiple = multiple
         ),
         selectizeInput(
-          ns("pais"), labels$pais,
+          ns("prov"), labels$prov,
+          choices = NULL,
+          multiple = multiple
+        ),
+        selectizeInput(
+          ns("mun"), labels$mun,
           choices = NULL,
           multiple = multiple
         )
@@ -814,7 +838,6 @@
                   "Random Forest"        = "RandomForest",
                   "Regressió logística"  = "LogisticRegression",
                   "LightGBM"             = "LightGBM",
-                  "Linear SVC calibrat"  = "LinearSVC",
                   "Xarxa neuronal"       = "NeuralNetwork"
                 ),
                 selected = "RandomForest"
@@ -1281,12 +1304,10 @@
     
     # Càlcul de la probabilitat amb el model triat
     output$out_prob <- renderPrint({
-      req(!is.null(models))
-      
       model_name <- input$pred_model
-      req(model_name %in% names(models))
+      req(model_name %in% names(model_files))
       
-      m <- models[[model_name]]
+      m <- get_model(model_name)
       req(!is.null(m))
       
       newdata <- df_case()
