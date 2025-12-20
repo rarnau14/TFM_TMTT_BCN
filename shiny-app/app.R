@@ -48,9 +48,9 @@
   # Models (fitxers separats)
   # ---------------------------------------------------------------
   model_files <- list(
-    RandomForest       = "model_rf.pkl",
     LogisticRegression = "model_lr.pkl",
     LightGBM           = "model_lgbm.pkl",
+    LinearSVC          = "model_svc.pkl",
     NeuralNetwork      = "model_nw.pkl"
   )
   
@@ -835,12 +835,12 @@
                 "pred_model",
                 "Model predictiu:",
                 choices = c(
-                  "Random Forest"        = "RandomForest",
                   "Regressió logística"  = "LogisticRegression",
                   "LightGBM"             = "LightGBM",
+                  "Linear SVC calibrat"  = "LinearSVC",
                   "Xarxa neuronal"       = "NeuralNetwork"
                 ),
-                selected = "RandomForest"
+                selected = "Regressió logística"
               ),
               
               # Inputs del cas
