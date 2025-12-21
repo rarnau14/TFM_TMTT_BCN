@@ -1,13 +1,4 @@
 # ---------------------------------------------------------------
-# APP.R — TMT Barcelona (versió optimitzada per Posit Connect Cloud)
-# - Predictor amb filtres a dalt i resultat a baix
-# - Interpretació fora del resultat
-# - Presentació amb 3 requadres (dashboard)
-# - Gràfics en Plotly natiu (sense ggplot)
-# - Sense scatter edat vs anys pena (eliminat)
-# ---------------------------------------------------------------
-
-# ---------------------------------------------------------------
 # Llibreries
 # ---------------------------------------------------------------
 library(shiny)
@@ -19,7 +10,7 @@ library(shinycssloaders)
 library(reticulate)
 
 # ---------------------------------------------------------------
-# Reticulate (Connect Cloud) - Python managed + cache estable
+# Reticulate
 # ---------------------------------------------------------------
 dir.create("reticulate_uv_cache", showWarnings = FALSE, recursive = TRUE)
 
@@ -44,7 +35,7 @@ pandas <- import("pandas", delay_load = TRUE)
 joblib <- import("joblib", delay_load = TRUE)
 
 # ---------------------------------------------------------------
-# Models (fitxers separats)
+# Models
 # ---------------------------------------------------------------
 model_files <- list(
   LogisticRegression = "model_lr.pkl",
@@ -179,7 +170,7 @@ geoCascadeServer <- function(id, data, cols, multiple = FALSE) {
 }
 
 # ---------------------------------------------------------------
-# KPI helpers
+# KPI
 # ---------------------------------------------------------------
 kpi_box <- function(title, value_ui, status) {
   box(
@@ -204,8 +195,7 @@ make_ui_total <- function(df_react) {
 }
 
 # ---------------------------------------------------------------
-# Funció única per construir gràfics (Plotly natiu)
-# (Sense scatter edat vs anys pena)
+# Funció única per construir gràfics
 # ---------------------------------------------------------------
 build_plot <- function(ds, plot_type) {
   req(nrow(ds) > 0)
@@ -431,11 +421,33 @@ ui <- dashboardPage(
           box(
             width = 6, status = "info", solidHeader = TRUE,
             title = "Fonts i documentació",
-            p(tags$strong("Més info aquí:")),
-            tags$a(
-              href = "https://anc.gencat.cat/ca/detall/noticia/Llista-de-processos-instruits-pel-regim-franquista",
-              target = "_blank",
-              "https://anc.gencat.cat/ca/detall/noticia/Llista-de-processos-instruits-pel-regim-franquista"
+            p("Enllaços útils per contextualitzar les dades i ampliar informació:"),
+            tags$ul(
+              tags$li(tags$a(
+                href = "https://anc.gencat.cat/ca/detall/noticia/Llista-de-processos-instruits-pel-regim-franquista",
+                target = "_blank",
+                "Arxiu Nacional de Catalunya — Llista de processos instruïts pel règim franquista"
+              )),
+              tags$li(tags$a(
+                href = "https://arxiusenlinia.cultura.gencat.cat/#/cercaavancada/detallunitat/ANC1-10-T-645",
+                target = "_blank",
+                "Guia Procediments judicials militars ('Sumaríssims') 1939-1980 de l'Arxiu del Tribunal Militar Territorial Tercer de Barcelona"
+              )),
+              tags$li(tags$a(
+                href = "https://memoria.gencat.cat/ca/inici/",
+                target = "_blank",
+                "Memòria Democràtica (Generalitat de Catalunya)"
+              )),
+              tags$li(tags$a(
+                href = "https://pares.cultura.gob.es/archivos-estatales.html",
+                target = "_blank",
+                "Portal de Archivos Españoles - Archivos Estatales"
+              )),
+
+            ),
+            div(
+              class = "soft-note",
+              "Nota: algunes fonts són hemeroteca/portal general; la disponibilitat pot variar segons el fons i la descripció arxivística."
             )
           ),
           
