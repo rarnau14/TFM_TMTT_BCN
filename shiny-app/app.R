@@ -573,7 +573,7 @@ ui <- dashboardPage(
                          "Anys Pena per Sexe" = "box_sexe_pena",
                          "Edat per Sexe" = "violin_edat_sexe",
                          "Mitjana Anys Pena per Any Resolució Procediment" = "line_mitja_pena_resol",
-                         "Procediment vs Tipus Pena" = "heatmap_proc_pena",
+                         "Procediment per Tipus Pena" = "heatmap_proc_pena",
                          "Edat per Procediment" = "box_edat_proc"
                        ),
                        selected = "edat"
@@ -638,7 +638,7 @@ ui <- dashboardPage(
                          "Anys Pena per Sexe" = "box_sexe_pena",
                          "Edat per Sexe" = "violin_edat_sexe",
                          "Mitjana Anys Pena per Any Resolució Procediment" = "line_mitja_pena_resol",
-                         "Proediment vs Tipus Pena" = "heatmap_proc_pena",
+                         "Proediment per Tipus Pena" = "heatmap_proc_pena",
                          "Edat per Procediment" = "box_edat_proc"
                        ),
                        selected = "edat"
