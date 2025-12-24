@@ -15,7 +15,7 @@ L’anàlisi exploratòria, la neteja de dades, l’enginyeria de característiq
 
 Els notebooks estan numerats per indicar l’ordre recomanat d’execució i garantir la traçabilitat del procés analític.
 
-Els models s’entrenen utilitzant diverses tècniques de classificació (Regressió Logística, SVM, LightGBM i xarxes neuronals) i es guarden en format `pickle` per a la seva posterior integració a l’aplicació Shiny.
+Els models s’entrenen utilitzant diverses tècniques de classificació (Regressió Logística, SVM, LightGBM i Xarxes Neuronals) i es guarden en format `pickle` per a la seva posterior integració a l’aplicació Shiny.
 
 
 ## Aplicació Shiny (R)
@@ -26,5 +26,12 @@ L’aplicació Shiny permet:
 - Visualitzar distribucions, tendències temporals i patrons territorials.
 - Estimar la probabilitat d’afusellament mitjançant models predictius entrenats en Python.
 
-L’aplicació es troba dins la carpeta `shiny-app/` i està pensada per ser desplegada de manera independent, per exemple a Posit Connect Cloud o shinyapps.io
+L’aplicació es troba dins la carpeta `shiny-app/` i està pensada per ser desplegada de manera independent, en aquest cas a Posit Connect Cloud.
+
+---
+
+### Accés a l’aplicació desplegada
+
+https://rarnauag-tfm-tmtt-bcn.share.connect.posit.cloud/
+
 
